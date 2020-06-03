@@ -1,11 +1,11 @@
-class Node {
+export class Node {
   constructor(value) {
     this.value = value;
     this.next = null;
   }
 }
 
-class SinglyLinkedList {
+export class SinglyLinkedList {
   constructor() {
     this.head = null;
     this.tail = null;
@@ -82,7 +82,7 @@ class SinglyLinkedList {
     return ++this.length;
   }
 
-  get(index) {
+  get(index, nodeWanted = true) {
     if (index < 0 || index > this.length - 1) return undefined;
 
     let counter = 0;
@@ -91,8 +91,7 @@ class SinglyLinkedList {
       counter++;
       pointer = pointer.next;
     }
-    pointer.next = null;
-    return pointer.value;
+    return nodeWanted ? pointer : pointer.value;
   }
 
   set(index, value) {

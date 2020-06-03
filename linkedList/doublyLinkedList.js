@@ -1,4 +1,4 @@
-class Node {
+export class Node {
   constructor(value) {
     this.value = value;
     this.next = null;
@@ -6,7 +6,7 @@ class Node {
   }
 }
 
-class DoublyLinkedList {
+export class DoublyLinkedList {
   constructor() {
     this.head = null;
     this.tail = null;
@@ -81,7 +81,7 @@ class DoublyLinkedList {
     return ++this.length;
   }
 
-  get(index) {
+  get(index, nodeWanted = true) {
     if (index < 0 || index > this.length - 1) return undefined;
 
     let counter;
@@ -106,9 +106,7 @@ class DoublyLinkedList {
       }
     }
 
-    pointer.next = null;
-    pointer.prev = null;
-    return pointer.value;
+    return nodeWanted ? pointer : pointer.value;
   }
 
   set(index, value) {
@@ -167,5 +165,7 @@ class DoublyLinkedList {
       pointer.prev = temp;
       pointer = pointer.next;
     }
+
+    return this.head;
   }
 }
