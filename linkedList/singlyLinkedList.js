@@ -30,11 +30,11 @@ class SinglyLinkedList {
     if (!this.tail) return undefined;
 
     if (this.head === this.tail) {
-      const value = this.head.value;
+      const popped = this.head;
       this.head = null;
       this.tail = null;
       this.length = 0;
-      return value;
+      return popped.value;
     }
 
     let pre = this.head;
@@ -43,28 +43,29 @@ class SinglyLinkedList {
       pre = lead;
       lead = lead.next;
     }
-    const value = lead.value;
+    const popped = lead;
     pre.next = null;
     this.tail = pre;
     this.length--;
-    return value;
+    return popped.value;
   }
 
   shift() {
     if (!this.head) return undefined;
 
+    const shifted = this.head;
+
     if (this.head === this.tail) {
-      const value = this.head.value;
       this.head = null;
       this.tail = null;
       this.length = 0;
-      return value;
+      return shifted.value;
     }
 
-    const value = this.head.value;
     this.head = this.head.next;
+    shifted.next = null;
     this.length--;
-    return value;
+    return shifted.value;
   }
 
   unshift(value) {
@@ -90,7 +91,8 @@ class SinglyLinkedList {
       counter++;
       pointer = pointer.next;
     }
-    return pointer;
+    pointer.next = null;
+    return pointer.value;
   }
 
   set(index, value) {
@@ -105,11 +107,11 @@ class SinglyLinkedList {
     if (index === 0) return this.unshift(value);
     if (index === this.length) return this.push(value);
 
-    const node = new Node(value);
+    const newNode = new Node(value);
     const pre = this.get(index - 1);
     const post = pre.next;
-    pre.next = node;
-    node.next = post;
+    pre.next = newNode;
+    newNode.next = post;
     return ++this.length;
   }
 
