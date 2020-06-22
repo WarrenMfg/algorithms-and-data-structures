@@ -50,6 +50,27 @@ class BinarySearchTree {
     }
   }
 
+  contains(value = null) {
+    // no argument or no root
+    if (value === null || this.value === null) return false;
+
+    // edge case
+    if (value === this.value) return true;
+
+    let pointer = this;
+    while (true) {
+      if (value < pointer.value) {
+        if (pointer.left) pointer = pointer.left;
+        else return false;
+      } else if (value > pointer.value) {
+        if (pointer.right) pointer = pointer.right;
+        else return false;
+      } else {
+        return true;
+      }
+    }
+  }
+
 }
 
 export default BinarySearchTree;
