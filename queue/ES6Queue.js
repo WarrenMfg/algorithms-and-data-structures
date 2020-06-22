@@ -9,6 +9,7 @@ class ES6Queue {
   enqueue(value) {
     this.storage[this.tail] = value;
     this.tail++;
+    return this.size();
   }
 
   dequeue() {

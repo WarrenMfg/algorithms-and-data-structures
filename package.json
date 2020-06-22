@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "npx mocha \"./**/*.spec.js\" --require @babel/register"
+    "test": "npx mocha \"./queue/Queue.spec.js\" --require @babel/register"
   },
   "repository": {
     "type": "git",

@@ -7,6 +7,7 @@ var PseudoclassicalQueue = function() {
 PseudoclassicalQueue.prototype.enqueue = function(value) {
   this.storage[this.tail] = value;
   this.tail++;
+  return this.size();
 };
 
 PseudoclassicalQueue.prototype.dequeue = function() {
