@@ -1,20 +1,22 @@
-const Stack = function() {
+const PseudoclassicalStack = function() {
   this.storage = {};
   this.count = 0;
 };
 
-Stack.prototype.push = function(value) {
+PseudoclassicalStack.prototype.push = function(value) {
   this.storage[this.count] = value;
-  this.count++;
+  return ++this.count;
 };
 
-Stack.prototype.pop = function() {
+PseudoclassicalStack.prototype.pop = function() {
   this.count > 0 ? this.count-- : this.count = 0;
   let value = this.storage.hasOwnProperty(this.count) ? this.storage[this.count] : null;
   delete this.storage[this.count];
   return value;
 };
 
-Stack.prototype.size = function() {
+PseudoclassicalStack.prototype.size = function() {
   return this.count;
 };
+
+export default PseudoclassicalStack;

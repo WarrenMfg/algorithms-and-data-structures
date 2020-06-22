@@ -1,4 +1,4 @@
-class Stack {
+class ES6Stack {
   constructor() {
     this.storage = {};
     this.count = 0;
@@ -6,7 +6,7 @@ class Stack {
 
   push(value) {
     this.storage[this.count] = value;
-    this.count++;
+    return ++this.count;
   }
 
   pop() {
@@ -20,3 +20,5 @@ class Stack {
     return this.count;
   }
 }
+
+export default ES6Stack;

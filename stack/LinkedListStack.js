@@ -1,4 +1,4 @@
-class Stack {
+class LinkedListStack {
   constructor(){
     this.head = null;
     this.tail = null;
@@ -16,13 +16,13 @@ class Stack {
   push(value) {
     const newNode = this.createNewNode(value);
 
-    if (!this.first) {
-        this.first = newNode;
-        this.last = newNode;
+    if (!this.head) {
+        this.head = newNode;
+        this.tail = newNode;
     } else {
-        const temp = this.first;
-        this.first = newNode;
-        this.first.next = temp;
+        const temp = this.head;
+        this.head = newNode;
+        this.head.next = temp;
     }
 
     return ++this.count;
@@ -30,14 +30,14 @@ class Stack {
 
   // similar to .shift() for linked list
   pop() {
-    if (!this.first) return null;
+    if (!this.head) return null;
 
-    const temp = this.first;
-    if (this.first === this.last) {
-        this.last = null;
+    const temp = this.head;
+    if (this.head === this.tail) {
+        this.tail = null;
     }
 
-    this.first = this.first.next;
+    this.head = this.head.next;
     this.count--;
 
     return temp.value;
@@ -49,4 +49,4 @@ class Stack {
 
 }
 
-export default Stack;
+export default LinkedListStack;
