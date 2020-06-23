@@ -1,6 +1,5 @@
 import Queue from '../queue/ES6Queue';
 
-
 class BinarySearchTree {
   constructor(value = null) {
     this.value = value;
@@ -37,7 +36,7 @@ class BinarySearchTree {
           return true;
         }
 
-      // value goes right
+        // value goes right
       } else if (value > pointer.value) {
         if (pointer.right) {
           pointer = pointer.right;
@@ -46,7 +45,7 @@ class BinarySearchTree {
           return true;
         }
 
-      // duplicate value/key
+        // duplicate value/key
       } else {
         return false;
       }
@@ -123,7 +122,7 @@ class BinarySearchTree {
     if (this.value === null) return false;
     // edge case -- no left or right
     if (this.value !== null && !this.left && !this.right) {
-      if (filter(this.value)) return [this.value];
+      if (filter(this.value)) return [ this.value ];
       else return [];
     }
 
@@ -149,7 +148,7 @@ class BinarySearchTree {
     if (this.value === null) return false;
     // edge case -- no left or right
     if (this.value !== null && !this.left && !this.right) {
-      if (filter(this.value)) return [this.value];
+      if (filter(this.value)) return [ this.value ];
       else return [];
     }
 
@@ -164,7 +163,6 @@ class BinarySearchTree {
     recurse(this);
     return result;
   }
-
 }
 
 export default BinarySearchTree;
