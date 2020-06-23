@@ -20,9 +20,9 @@ describe('Binary Search Tree', () => {
       expect(bst).to.have.property('insert');
       expect(bst).to.have.property('contains');
       expect(bst).to.have.property('updateEachBFS');
-      expect(bst).to.have.property('updateEachDFSPreOrder');
+      expect(bst).to.have.property('updateEachDFS');
       expect(bst).to.have.property('filterBFS');
-      expect(bst).to.have.property('filterDFSPreOrder');
+      expect(bst).to.have.property('filterDFS');
     });
   });
 
@@ -144,52 +144,45 @@ describe('Binary Search Tree', () => {
     });
   });
 
-  describe('updateEachDFSPreOrder', () => {
+  describe('updateEachDFS', () => {
     // update function
     const double = value => value * 2;
 
     it('Returns false when there is no root', () => {
-      result = bst.updateEachDFSPreOrder(double);
+      result = bst.updateEachDFS(double);
       expect(result).to.be.false;
     });
 
     it('Returns true when root is only node', () => {
       bst.insert(10);
-      result = bst.updateEachDFSPreOrder(double);
+      result = bst.updateEachDFS(double);
       expect(result).to.be.true;
       expect(bst.value).to.equal(20);
     });
 
-    it('Returns true after updating each node', () => {
+    it('Returns true after updating each node -- postOrder', () => {
       insertNodes(bst);
-      result = bst.updateEachDFSPreOrder(double);
+      result = bst.updateEachDFS(double, 'postOrder');
       expect(result).to.be.true;
-      [ 20, 10, 8, 12, 30, 28, 32 ].forEach(value => {
+      [ 8, 12, 10, 28, 32, 30, 20 ].forEach(value => {
         result = bst.contains(value);
         expect(result).to.be.true;
       });
     });
-  });
 
-  describe('updateEachDFSPostOrder', () => {
-    // update function
-    const double = value => value * 2;
-
-    it('Returns false when there is no root', () => {
-      result = bst.updateEachDFSPostOrder(double);
-      expect(result).to.be.false;
-    });
-
-    it('Returns true when root is only node', () => {
-      bst.insert(10);
-      result = bst.updateEachDFSPostOrder(double);
-      expect(result).to.be.true;
-      expect(bst.value).to.equal(20);
-    });
-
-    it('Returns true after updating each node', () => {
+    it('Returns true after updating each node -- inOrder', () => {
       insertNodes(bst);
-      result = bst.updateEachDFSPostOrder(double);
+      result = bst.updateEachDFS(double, 'inOrder');
+      expect(result).to.be.true;
+      [ 8, 10, 12, 20, 28, 30, 32 ].forEach(value => {
+        result = bst.contains(value);
+        expect(result).to.be.true;
+      });
+    });
+
+    it('Returns true after updating each node -- preOrder', () => {
+      insertNodes(bst);
+      result = bst.updateEachDFS(double, 'preOrder');
       expect(result).to.be.true;
       [ 20, 10, 8, 12, 30, 28, 32 ].forEach(value => {
         result = bst.contains(value);
@@ -230,71 +223,61 @@ describe('Binary Search Tree', () => {
     });
   });
 
-  describe('filterDFSPreOrder', () => {
+  describe('filterDFS', () => {
     // filter function
     const filter = value => value % 2 === 0;
 
     it('Returns false when there is no root', () => {
-      result = bst.filterDFSPreOrder(filter);
+      result = bst.filterDFS(filter);
       expect(result).to.be.false;
     });
 
     it('Returns array of length 1 when root is only node and passes filter', () => {
       bst.insert(10);
-      result = bst.filterDFSPreOrder(filter);
+      result = bst.filterDFS(filter);
       expect(result).to.eql([ 10 ]);
     });
 
     it('Returns array of length 0 when root is only node and does not pass filter', () => {
       bst.insert(11);
-      result = bst.filterDFSPreOrder(filter);
+      result = bst.filterDFS(filter);
       expect(result).to.eql([]);
     });
 
-    it('Returns array of even values; returns array of odd values', () => {
+    it('Returns array of even values; returns array of odd values -- postOrder', () => {
       insertNodes(bst);
       bst.insert(2);
       bst.insert(1);
       // even
-      result = bst.filterDFSPreOrder(filter);
-      expect(result).to.eql([ 10, 4, 2, 6, 14, 16 ]);
-      // odd
-      result = bst.filterDFSPreOrder(value => value % 2 !== 0);
-      expect(result).to.eql([ 5, 1, 15 ]);
-    });
-  });
-
-  describe('filterDFSPostOrder', () => {
-    // filter function
-    const filter = value => value % 2 === 0;
-
-    it('Returns false when there is no root', () => {
-      result = bst.filterDFSPostOrder(filter);
-      expect(result).to.be.false;
-    });
-
-    it('Returns array of length 1 when root is only node and passes filter', () => {
-      bst.insert(10);
-      result = bst.filterDFSPostOrder(filter);
-      expect(result).to.eql([ 10 ]);
-    });
-
-    it('Returns array of length 0 when root is only node and does not pass filter', () => {
-      bst.insert(11);
-      result = bst.filterDFSPostOrder(filter);
-      expect(result).to.eql([]);
-    });
-
-    it('Returns array of even values; returns array of odd values', () => {
-      insertNodes(bst);
-      bst.insert(2);
-      bst.insert(1);
-      // even
-      result = bst.filterDFSPostOrder(filter);
+      result = bst.filterDFS(filter, 'postOrder');
       expect(result).to.eql([ 2, 4, 6, 14, 16, 10 ]);
       // odd
-      result = bst.filterDFSPostOrder(value => value % 2 !== 0);
+      result = bst.filterDFS(value => value % 2 !== 0, 'postOrder');
       expect(result).to.eql([ 1, 5, 15 ]);
+    });
+
+    it('Returns array of even values; returns array of odd values -- inOrder', () => {
+      insertNodes(bst);
+      bst.insert(2);
+      bst.insert(1);
+      // even
+      result = bst.filterDFS(filter, 'inOrder');
+      expect(result).to.eql([ 2, 4, 6, 10, 14, 16 ]);
+      // odd
+      result = bst.filterDFS(value => value % 2 !== 0, 'inOrder');
+      expect(result).to.eql([ 1, 5, 15 ]);
+    });
+
+    it('Returns array of even values; returns array of odd values -- preOrder', () => {
+      insertNodes(bst);
+      bst.insert(2);
+      bst.insert(1);
+      // even
+      result = bst.filterDFS(filter, 'preOrder');
+      expect(result).to.eql([ 10, 4, 2, 6, 14, 16 ]);
+      // odd
+      result = bst.filterDFS(value => value % 2 !== 0, 'preOrder');
+      expect(result).to.eql([ 5, 1, 15 ]);
     });
   });
 });

@@ -98,7 +98,7 @@ class BinarySearchTree {
     return true;
   }
 
-  updateEachDFSPreOrder(func) {
+  updateEachDFS(func, order = 'preOrder') {
     // no root
     if (this.value === null) return false;
     // edge case -- no left or right
@@ -107,32 +107,28 @@ class BinarySearchTree {
       return true;
     }
 
-    const recurse = node => {
-      node.value = func(node.value);
-      if (node.left) recurse(node.left);
-      if (node.right) recurse(node.right);
-    };
-
-    recurse(this);
-    return true;
-  }
-
-  updateEachDFSPostOrder(func) {
-    // no root
-    if (this.value === null) return false;
-    // edge case -- no left or right
-    if (this.value !== null && !this.left && !this.right) {
-      this.value = func(this.value);
-      return true;
-    }
-
-    const recurse = node => {
-      if (node.left) recurse(node.left);
-      if (node.right) recurse(node.right);
+    const recursePostOrder = node => {
+      if (node.left) recursePostOrder(node.left);
+      if (node.right) recursePostOrder(node.right);
       node.value = func(node.value);
     };
 
-    recurse(this);
+    const recurseInOrder = node => {
+      if (node.left) recurseInOrder(node.left);
+      node.value = func(node.value);
+      if (node.right) recurseInOrder(node.right);
+    };
+
+    const recursePreOrder = node => {
+      node.value = func(node.value);
+      if (node.left) recursePreOrder(node.left);
+      if (node.right) recursePreOrder(node.right);
+    };
+
+    if (order === 'postOrder') recursePostOrder(this);
+    else if (order === 'inOrder') recurseInOrder(this);
+    else recursePreOrder(this);
+
     return true;
   }
 
@@ -162,7 +158,7 @@ class BinarySearchTree {
     return result;
   }
 
-  filterDFSPreOrder(filter) {
+  filterDFS(filter, order = 'preOrder') {
     // no root
     if (this.value === null) return false;
     // edge case -- no left or right
@@ -173,34 +169,28 @@ class BinarySearchTree {
 
     const result = [];
 
-    const recurse = node => {
-      if (filter(node.value)) result.push(node.value);
-      if (node.left) recurse(node.left);
-      if (node.right) recurse(node.right);
-    };
-
-    recurse(this);
-    return result;
-  }
-
-  filterDFSPostOrder(filter) {
-    // no root
-    if (this.value === null) return false;
-    // edge case -- no left or right
-    if (this.value !== null && !this.left && !this.right) {
-      if (filter(this.value)) return [ this.value ];
-      else return [];
-    }
-
-    const result = [];
-
-    const recurse = node => {
-      if (node.left) recurse(node.left);
-      if (node.right) recurse(node.right);
+    const recursePostOrder = node => {
+      if (node.left) recursePostOrder(node.left);
+      if (node.right) recursePostOrder(node.right);
       if (filter(node.value)) result.push(node.value);
     };
 
-    recurse(this);
+    const recurseInOrder = node => {
+      if (node.left) recurseInOrder(node.left);
+      if (filter(node.value)) result.push(node.value);
+      if (node.right) recurseInOrder(node.right);
+    };
+
+    const recursePreOrder = node => {
+      if (filter(node.value)) result.push(node.value);
+      if (node.left) recursePreOrder(node.left);
+      if (node.right) recursePreOrder(node.right);
+    };
+
+    if (order === 'postOrder') recursePostOrder(this);
+    else if (order === 'inOrder') recurseInOrder(this);
+    else recursePreOrder(this);
+
     return result;
   }
 }
@@ -213,9 +203,9 @@ insertArray
 removeBranch
 removeNode --> detaches branch and adds back nodes after target
 //updateEachBFS
-updateEachDFS
+//updateEachDFS
 //filterBFS
-filterDFS
+//filterDFS
 countNodes
 balance
 
