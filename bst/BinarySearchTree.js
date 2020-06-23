@@ -90,12 +90,31 @@ class BinarySearchTree {
       if (!queue.size()) return;
       const node = queue.dequeue();
       node.value = func(node.value);
-      if (node.left !== null) queue.enqueue(node.left);
-      if (node.right !== null) queue.enqueue(node.right);
+      if (node.left) queue.enqueue(node.left);
+      if (node.right) queue.enqueue(node.right);
       recurse();
     };
 
     recurse();
+    return true;
+  }
+
+  updateEachDFSPreOrder(func) {
+    // no root
+    if (this.value === null) return false;
+    // edge case -- no left or right
+    if (this.value !== null && !this.left && !this.right) {
+      this.value = func(this.value);
+      return true;
+    }
+
+    const recurse = node => {
+      node.value = func(node.value);
+      if (node.left) recurse(node.left);
+      if (node.right) recurse(node.right);
+    };
+
+    recurse(this);
     return true;
   }
 
@@ -116,12 +135,33 @@ class BinarySearchTree {
       if (!queue.size()) return;
       const node = queue.dequeue();
       if (filter(node.value)) result.push(node.value);
-      if (node.left !== null) queue.enqueue(node.left);
-      if (node.right !== null) queue.enqueue(node.right);
+      if (node.left) queue.enqueue(node.left);
+      if (node.right) queue.enqueue(node.right);
       recurse();
     };
 
     recurse();
+    return result;
+  }
+
+  filterDFSPreOrder(filter) {
+    // no root
+    if (this.value === null) return false;
+    // edge case -- no left or right
+    if (this.value !== null && !this.left && !this.right) {
+      if (filter(this.value)) return [this.value];
+      else return [];
+    }
+
+    const result = [];
+
+    const recurse = node => {
+      if (filter(node.value)) result.push(node.value);
+      if (node.left) recurse(node.left);
+      if (node.right) recurse(node.right);
+    };
+
+    recurse(this);
     return result;
   }
 
@@ -134,10 +174,10 @@ export default BinarySearchTree;
 insertArray
 detachBranch
 detachNode --> detaches branch and adds back nodes after target
-forEachDFS
-forEachBFS
-forEachFilterBFS
-forEachFilterDFS
+//updateEachBFS
+updateEachDFS
+//filterBFS
+filterDFS
 countNodes
 
 */
