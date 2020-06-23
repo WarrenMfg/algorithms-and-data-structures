@@ -1,4 +1,3 @@
-import Queue from '../queue/ES6Queue';
 import BinarySearchTree from './BinarySearchTree';
 import { expect } from 'chai';
 
