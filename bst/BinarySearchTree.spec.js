@@ -171,6 +171,72 @@ describe('Binary Search Tree', () => {
       });
     });
   });
+
+  describe('filterBFS', () => {
+    // filter function
+    const filter = value => value % 2 === 0;
+
+    it('Returns false when there is no root', () => {
+      result = bst.filterBFS(filter);
+      expect(result).to.be.false;
+    });
+
+    it('Returns array of length 1 when root is only node and passes filter', () => {
+      bst.insert(10);
+      result = bst.filterBFS(filter);
+      expect(result).to.eql([ 10 ]);
+    });
+
+    it('Returns array of length 0 when root is only node and does not pass filter', () => {
+      bst.insert(11);
+      result = bst.filterBFS(filter);
+      expect(result).to.eql([]);
+    });
+
+    it('Returns array of even values; returns array of odd values', () => {
+      insertNodes(bst);
+      // even
+      result = bst.filterBFS(filter);
+      expect(result).to.eql([ 10, 4, 6, 14, 16 ]);
+      // odd
+      result = bst.filterBFS(value => value % 2 !== 0);
+      expect(result).to.eql([ 5, 15 ]);
+    });
+  });
+
+  describe('filterDFSPreOrder', () => {
+    // filter function
+    const filter = value => value % 2 === 0;
+
+    it('Returns false when there is no root', () => {
+      result = bst.filterDFSPreOrder(filter);
+      expect(result).to.be.false;
+    });
+
+    it('Returns array of length 1 when root is only node and passes filter', () => {
+      bst.insert(10);
+      result = bst.filterDFSPreOrder(filter);
+      expect(result).to.eql([ 10 ]);
+    });
+
+    it('Returns array of length 0 when root is only node and does not pass filter', () => {
+      bst.insert(11);
+      result = bst.filterDFSPreOrder(filter);
+      expect(result).to.eql([]);
+    });
+
+    it('Returns array of even values; returns array of odd values', () => {
+      insertNodes(bst);
+      bst.insert(2);
+      bst.insert(1);
+      // even
+      result = bst.filterDFSPreOrder(filter);
+      expect(result).to.eql([ 10, 4, 2, 6, 14, 16 ]);
+      // odd
+      result = bst.filterDFSPreOrder(value => value % 2 !== 0);
+      expect(result).to.eql([ 5, 1, 15 ]);
+    });
+  });
 });
 
 function insertNodes(bst) {
