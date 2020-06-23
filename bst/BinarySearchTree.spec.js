@@ -83,6 +83,40 @@ describe('Binary Search Tree', () => {
       });
     });
   });
+
+  describe('contains', () => {
+    it('Returns false when no argument is passed in', () => {
+      result = bst.contains();
+      expect(result).to.be.false;
+    });
+
+    it('Returns false when there is no root', () => {
+      result = bst.contains(10);
+      expect(result).to.be.false;
+    });
+
+    it('Returns true when argument equals root', () => {
+      insertNodes(bst);
+      result = bst.contains(10);
+      expect(result).to.be.true;
+    });
+
+    it('Returns true for all nodes in tree', () => {
+      insertNodes(bst);
+      [ 10, 5, 4, 6, 15, 14, 16 ].forEach(value => {
+        result = bst.contains(value);
+        expect(result).to.be.true;
+      });
+    });
+
+    it('Returns false for nodes not in a tree', () => {
+      insertNodes(bst);
+      [ 11, 3, 7, 20, 19, 21 ].forEach(value => {
+        result = bst.contains(value);
+        expect(result).to.be.false;
+      });
+    });
+  });
 });
 
 function insertNodes(bst) {
