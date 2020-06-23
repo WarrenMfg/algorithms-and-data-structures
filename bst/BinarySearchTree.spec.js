@@ -144,6 +144,33 @@ describe('Binary Search Tree', () => {
       });
     });
   });
+
+  describe('updateEachDFSPreOrder', () => {
+    // update function
+    const double = value => value * 2;
+
+    it('Returns false when there is no root', () => {
+      result = bst.updateEachDFSPreOrder(double);
+      expect(result).to.be.false;
+    });
+
+    it('Returns true when root is only node', () => {
+      bst.insert(10);
+      result = bst.updateEachDFSPreOrder(double);
+      expect(result).to.be.true;
+      expect(bst.value).to.equal(20);
+    });
+
+    it('Returns true after updating each node', () => {
+      insertNodes(bst);
+      result = bst.updateEachDFSPreOrder(double);
+      expect(result).to.be.true;
+      [ 20, 10, 8, 12, 30, 28, 32 ].forEach(value => {
+        result = bst.contains(value);
+        expect(result).to.be.true;
+      });
+    });
+  });
 });
 
 function insertNodes(bst) {
