@@ -172,12 +172,13 @@ export default BinarySearchTree;
 /*
 
 insertArray
-detachBranch
-detachNode --> detaches branch and adds back nodes after target
+removeBranch
+removeNode --> detaches branch and adds back nodes after target
 //updateEachBFS
 updateEachDFS
 //filterBFS
 filterDFS
 countNodes
+balance
 
 */
