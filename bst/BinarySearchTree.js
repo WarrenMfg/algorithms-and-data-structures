@@ -182,6 +182,27 @@ class BinarySearchTree {
     recurse(this);
     return result;
   }
+
+  filterDFSPostOrder(filter) {
+    // no root
+    if (this.value === null) return false;
+    // edge case -- no left or right
+    if (this.value !== null && !this.left && !this.right) {
+      if (filter(this.value)) return [ this.value ];
+      else return [];
+    }
+
+    const result = [];
+
+    const recurse = node => {
+      if (node.left) recurse(node.left);
+      if (node.right) recurse(node.right);
+      if (filter(node.value)) result.push(node.value);
+    };
+
+    recurse(this);
+    return result;
+  }
 }
 
 export default BinarySearchTree;

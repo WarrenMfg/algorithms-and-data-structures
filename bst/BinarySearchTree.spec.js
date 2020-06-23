@@ -263,6 +263,40 @@ describe('Binary Search Tree', () => {
       expect(result).to.eql([ 5, 1, 15 ]);
     });
   });
+
+  describe('filterDFSPostOrder', () => {
+    // filter function
+    const filter = value => value % 2 === 0;
+
+    it('Returns false when there is no root', () => {
+      result = bst.filterDFSPostOrder(filter);
+      expect(result).to.be.false;
+    });
+
+    it('Returns array of length 1 when root is only node and passes filter', () => {
+      bst.insert(10);
+      result = bst.filterDFSPostOrder(filter);
+      expect(result).to.eql([ 10 ]);
+    });
+
+    it('Returns array of length 0 when root is only node and does not pass filter', () => {
+      bst.insert(11);
+      result = bst.filterDFSPostOrder(filter);
+      expect(result).to.eql([]);
+    });
+
+    it('Returns array of even values; returns array of odd values', () => {
+      insertNodes(bst);
+      bst.insert(2);
+      bst.insert(1);
+      // even
+      result = bst.filterDFSPostOrder(filter);
+      expect(result).to.eql([ 2, 4, 6, 14, 16, 10 ]);
+      // odd
+      result = bst.filterDFSPostOrder(value => value % 2 !== 0);
+      expect(result).to.eql([ 1, 5, 15 ]);
+    });
+  });
 });
 
 function insertNodes(bst) {
